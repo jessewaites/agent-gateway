@@ -1,0 +1,7 @@
+Gemfile.lock
+spec/dummy/db/*.sqlite3
+spec/dummy/log/
+spec/dummy/tmp/
+pkg/
+*.gem
+.bundle/
