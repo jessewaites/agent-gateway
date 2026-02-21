@@ -39,18 +39,6 @@ AGENT_GATEWAY_SECRET=<generated uuid>
 heroku config:set AGENT_GATEWAY_TOKEN=<generated hex> AGENT_GATEWAY_SECRET=<generated uuid>
 ```
 
-> **Build-phase note:** On platforms like Heroku where config vars may not be available during the build phase, guard the initializer with an early return:
->
-> ```ruby
-> return unless ENV["AGENT_GATEWAY_TOKEN"].present?
->
-> AgentGateway.configure do |c|
->   # ...
-> end
-> ```
->
-> This prevents the engine from raising during `rake assets:precompile`.
-
 ## Configuration
 
 Create an initializer `config/initializers/agent_gateway.rb`:
