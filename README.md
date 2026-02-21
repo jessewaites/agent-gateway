@@ -23,6 +23,9 @@ mount AgentGateway::Engine => "/agent-gateway"
 Create an initializer `config/initializers/agent_gateway.rb`:
 
 ```ruby
+# Guard against missing env vars during build steps (see note below)
+return unless ENV["AGENT_GATEWAY_TOKEN"].present?
+
 AgentGateway.configure do |c|
   c.app_name    = "MyApp"
   c.auth_token  = ENV["AGENT_GATEWAY_TOKEN"]  # required — raises at boot if blank
@@ -46,6 +49,8 @@ AgentGateway.configure do |c|
   end
 end
 ```
+
+> **Heroku / build-phase note:** Platforms like Heroku don't expose config vars during the build phase. Without the `return unless` guard, the engine raises on `rake assets:precompile` and the deploy fails. The guard skips configuration when the token isn't available (build time) and configures normally at runtime.
 
 ### DSL Reference
 
