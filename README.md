@@ -2,7 +2,14 @@
 
 # Agent Gateway
 
-A mountable Rails engine that exposes a single authenticated JSON endpoint for AI agents to consume your app's data.
+Agent Gateway is a mountable Rails engine that gives AI agents secure, authenticated access to your Rails app’s allow-listed data through a single read-only JSON endpoint.
+
+Ask questions about your business in plain English and get real answers from OpenClaw, Claude Code, Codex, and other AI tools.
+
+Schedule automated daily, weekly, or monthly reports across all your Rails apps and turn your data into ongoing conversations.
+
+“How many new users did we get last week?” Just ask your AI.
+“What was our revenue last month across all our apps?” Just ask your AI.
 
 ## Installation
 
@@ -75,15 +82,15 @@ end
 
 ### DSL Reference
 
-| Method | Description |
-|--------|-------------|
-| `count` | Include record count |
-| `latest N` | Include N most recent records |
-| `attributes :col1, :col2` | Allowlist fields on latest records |
-| `sum :column` | Sum a numeric column (call multiple times for multiple columns) |
-| `avg :column` | Average a numeric column (call multiple times) |
-| `scope :name` | Apply a named scope to all queries |
-| `date_column :name` | Column used for period filtering (default: `created_at`) |
+| Method                    | Description                                                     |
+| ------------------------- | --------------------------------------------------------------- |
+| `count`                   | Include record count                                            |
+| `latest N`                | Include N most recent records                                   |
+| `attributes :col1, :col2` | Allowlist fields on latest records                              |
+| `sum :column`             | Sum a numeric column (call multiple times for multiple columns) |
+| `avg :column`             | Average a numeric column (call multiple times)                  |
+| `scope :name`             | Apply a named scope to all queries                              |
+| `date_column :name`       | Column used for period filtering (default: `created_at`)        |
 
 ## Endpoint
 
@@ -94,6 +101,7 @@ GET /<mount_path>/<path_secret>/briefing
 ### Authentication
 
 Two-layer auth:
+
 1. **Path secret** — wrong value returns `404` (endpoint appears nonexistent)
 2. **Bearer token** — wrong/missing value returns `401`
 
@@ -104,11 +112,11 @@ curl -H "Authorization: Bearer $TOKEN" \
 
 ### Query Parameters
 
-| Param | Description | Example |
-|-------|-------------|---------|
-| `period` | Time window: `1d`, `7d`, `30d`, `90d`, `1y`, `all` | `?period=30d` |
-| `resources` | Comma-separated resource keys to include | `?resources=users,orders` |
-| `latest` | Override latest count for all resources | `?latest=10` |
+| Param       | Description                                        | Example                   |
+| ----------- | -------------------------------------------------- | ------------------------- |
+| `period`    | Time window: `1d`, `7d`, `30d`, `90d`, `1y`, `all` | `?period=30d`             |
+| `resources` | Comma-separated resource keys to include           | `?resources=users,orders` |
+| `latest`    | Override latest count for all resources            | `?latest=10`              |
 
 ### Response
 
@@ -125,15 +133,24 @@ curl -H "Authorization: Bearer $TOKEN" \
     "users": {
       "count": 142,
       "latest": [
-        { "email": "new@example.com", "name": "New User", "created_at": "2026-02-20" }
+        {
+          "email": "new@example.com",
+          "name": "New User",
+          "created_at": "2026-02-20"
+        }
       ]
     },
     "orders": {
       "count": 89,
-      "sum": { "total": 12450.00 },
+      "sum": { "total": 12450.0 },
       "avg": { "total": 139.89 },
       "latest": [
-        { "id": 501, "total": "250.00", "status": "paid", "created_at": "2026-02-20" }
+        {
+          "id": 501,
+          "total": "250.00",
+          "status": "paid",
+          "created_at": "2026-02-20"
+        }
       ]
     }
   }
