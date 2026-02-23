@@ -2,6 +2,9 @@
 
 # Agent Gateway
 
+> **OpenClaw users:** Use the [Ruby on Rails Gateway](https://clawhub.ai/jessewaites/ruby-on-rails-gateway) skill alongside this gem for easy and fast setup.
+
+
 Agent Gateway is a mountable Rails engine that gives AI agents secure, authenticated access to your Rails app’s allow-listed data through a single read-only JSON endpoint.
 
 Ask questions about your business in plain English and get real answers from OpenClaw, Claude Code, Codex, and other AI tools.
